@@ -52,7 +52,7 @@ export class PokedexComponent implements OnInit {
     this.renderPokemon(this.searchPokemon);
   }
 
-  async renderPokemon(pokemon: string){
+  renderPokemon(pokemon: string){
 
     //pokemonName.innerHTML = 'Loading...';
     //pokemonNumber.innerHTML = '';
