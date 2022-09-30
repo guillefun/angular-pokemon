@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PokedexModule } from './pages/pokedex/pokedex.module';
 
-const routes: Routes = [];
+const routes: Routes = [{
+  path: 'pokedex',
+  loadChildren: () => import('./pages/pokedex/pokedex.module').then((m) => m.PokedexModule),
+},
+{ path: '**', redirectTo: 'pokedex', pathMatch: 'full' },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
