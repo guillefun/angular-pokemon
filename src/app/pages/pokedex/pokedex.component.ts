@@ -48,10 +48,11 @@ export class PokedexComponent implements OnInit {
                 'animated'
               ]['front_default'];
             this.searchPokemon = res.id;
-          } else {
-            this.pokemonName = 'Not found :c';
-            this.pokemonNumber = '';
           }
+        },
+        (error)=>{
+          this.pokemonName = 'Not found :c';
+          this.pokemonNumber = '';
         });
       }
     }, 1000);
