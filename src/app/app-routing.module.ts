@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { PokedexModule } from './pages/pokedex/pokedex.module';
 
 const routes: Routes = [{
-  path: 'pokedex',
+  path: '',
   loadChildren: () => import('./pages/pokedex/pokedex.module').then((m) => m.PokedexModule),
 },
-{ path: '**', redirectTo: 'pokedex', pathMatch: 'full' },
+{ path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
