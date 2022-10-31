@@ -10,7 +10,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class PokedexComponent implements OnInit {
   constructor(private pokedexService: PokedexService) {}
-  pokemonName: any = 'Loading...';
+
+  MAX_POKE = 649;
+  MIN_POKE = 1;
+
+  pokemonName: string = 'Loading...';
   pokemonNumber: any = '';
   pokemonImage: any;
 
@@ -19,77 +23,51 @@ export class PokedexComponent implements OnInit {
   buttonPrev: any;
   buttonNext: any;
 
-  searchPokemon: any = 15;
+  searchPokemon: any = 1;
+  timeout: any;
 
   pokedexForm = new FormGroup({
-    shortId: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(22),
-      Validators.minLength(22),
-    ]),
+    search: new FormControl(null, [Validators.required]),
   });
 
   ngOnInit(): void {
-
-/*
-    this.form.addEventListener('submit', (event: any) => {
-      event.preventDefault();
-      this.renderPokemon(this.input.value.toLowerCase());
-    });
-
-    this.buttonPrev.addEventListener('click', () => {
-      if (this.searchPokemon > 1) {
-        this.searchPokemon -= 1;
-        this.renderPokemon(this.searchPokemon);
-      }
-    });
-
-    this.buttonNext.addEventListener('click', () => {
-      this.searchPokemon += 1;
-      this.renderPokemon(this.searchPokemon);
-    });*/
-
     this.renderPokemon(this.searchPokemon);
   }
 
-  renderPokemon(pokemon: string){
-
-    //pokemonName.innerHTML = 'Loading...';
-    //pokemonNumber.innerHTML = '';
-
-    this.pokedexService.getPokemon(pokemon).subscribe((res)=>{
-      if (res) {
-       // pokemonImage.style.display = 'block';
-       console.log(res)
-        this.pokemonName = res.name;
-        this.pokemonNumber = res.id;
-        this.pokemonImage = res['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
-       // input = '';
-        this.searchPokemon = res.id;
-      } else {
-     //   pokemonImage.style.display = 'none';
-     this.pokemonName = 'Not found :c';
-     this.pokemonNumber = '';
+  renderPokemon(pokemon: string, event: any = {}) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      if (event.keyCode != 13) {
+        this.pokedexService.getPokemon(pokemon).subscribe((res) => {
+          if (res) {
+            console.log(res);
+            this.pokemonName = res.name;
+            this.pokemonNumber = res.id;
+            this.pokemonImage =
+              res['sprites']['versions']['generation-v']['black-white'][
+                'animated'
+              ]['front_default'];
+            this.searchPokemon = res.id;
+          } else {
+            this.pokemonName = 'Not found :c';
+            this.pokemonNumber = '';
+          }
+        });
       }
-    })
-
-
+    }, 1000);
   }
-  /*
-// elem ref
-const searchBox = document.getElementById('search');
 
-// streams
-const keyup$ = fromEvent(searchBox, 'keyup')
+  nextPokemon() {
+    if (this.searchPokemon < this.MAX_POKE) {
+      this.searchPokemon = this.searchPokemon + 1;
+      this.renderPokemon(this.searchPokemon);
+    }
+  }
 
-// wait .5s between keyups to emit current value
-keyup$.pipe(
-  map((i: any) => i.currentTarget.value),
-  debounceTime(500)
-)
-.subscribe((value) => {
-  console.log('value is', value);
-});*/
-
-
+  prevPokemon() {
+    if (this.searchPokemon > this.MIN_POKE) {
+      this.searchPokemon = this.searchPokemon - 1;
+      this.renderPokemon(this.searchPokemon);
+    }
+  }
 }

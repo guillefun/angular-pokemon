@@ -1,16 +1,17 @@
 
   <main>
-    <img src="#" class="pokemon__image" src="{{pokemonImage}}">
+    <img src="#" class="pokemon-image" src="{{pokemonImage}}">
 
-    <h1 class="pokemon__data">
-      <span class="pokemon__number">{{pokemonNumber}}</span> -
-      <span class="pokemon__name">{{pokemonName}}</span>
+    <h1 class="pokemon-data">
+      <span class="pokemon-number">{{pokemonNumber}}</span> -
+      <span class="pokemon-name">{{pokemonName}}</span>
     </h1>
 
     <form class="form" [formGroup]="pokedexForm">
       <input
-        type="search"
-        class="input__search"
+        formControlName="search"
+        class="input-search"
+        (keyup)="renderPokemon(pokedexForm.get('search')?.value, $event)"
         placeholder="Name or Number"
         required
 
@@ -18,8 +19,8 @@
     </form>
 
     <div class="buttons">
-      <button class="button btn-prev">Prev &lt;</button>
-      <button class="button btn-next">Next &gt;</button>
+      <button class="button btn-prev" (click)="prevPokemon()">Prev &lt;</button>
+      <button class="button btn-next" (click)="nextPokemon()">Next &gt;</button>
     </div>
 
     <img src="./assets/pokedex.png" alt="pokedex" class="pokedex">
