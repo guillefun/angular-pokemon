@@ -5,8 +5,7 @@ import { PokedexModule } from './pages/pokedex/pokedex.module';
 const routes: Routes = [{
   path: '',
   loadChildren: () => import('./pages/pokedex/pokedex.module').then((m) => m.PokedexModule),
-},
-{ path: '**', redirectTo: '', pathMatch: 'full' },
+}
 ];
 
 @NgModule({
