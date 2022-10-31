@@ -3,15 +3,12 @@ on:
   push:
     branches:
       - master
-
 jobs:
   ci:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: '12.x'
-
+        node-version: '10.x'
     steps:
       - uses: actions/checkout@v2
 
