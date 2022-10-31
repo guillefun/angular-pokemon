@@ -6,7 +6,7 @@ const routes: Routes = [{
   path: 'pokedex',
   loadChildren: () => import('./pages/pokedex/pokedex.module').then((m) => m.PokedexModule),
 },
-{ path: '**', redirectTo: '', pathMatch: 'full' },
+{ path: '**', redirectTo: 'pokedex', pathMatch: 'full' },
 ];
 
 @NgModule({
